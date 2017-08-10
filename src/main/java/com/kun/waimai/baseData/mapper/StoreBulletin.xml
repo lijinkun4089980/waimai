@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bjqx.baseData.dao.StoreBulletinMapper">
+	
+	<resultMap type="com.bjqx.baseData.entity.StoreBulletin" id="StoreBulletinMap">
+		<id column="c_id" jdbcType="INTEGER" property="id"/>
+		<result column="c_store_id" jdbcType="INTEGER" property="storeId"/>
+		<result column="c_bulletin_content" jdbcType="VARCHAR" property="bulletinContent"/>
+	</resultMap>
+	
+	<select id="findList" parameterType="hashmap" resultMap="StoreBulletinMap">
+		select t.*
+		<include refid="findSql"/>
+	</select>
+
+    <select id="findOne" parameterType="hashmap" resultMap="StoreBulletinMap">
+        select t.*
+        <include refid="findSql"/>
+    </select>
+
+	<sql id="findSql">
+		from t_store_bulletin t 
+        <where>
+        	<if test="id != null ">and t.c_id = #{id, jdbcType=INTEGER}</if>
+        </where>
+	</sql>
+	
+	<select id="findById" parameterType="Integer" resultMap="StoreBulletinMap">
+		select t.* from t_store_bulletin t where t.c_id = #{id, jdbcType=INTEGER}
+	</select>
+	
+	<insert id="addOne" parameterType="com.bjqx.baseData.entity.StoreBulletin" useGeneratedKeys="true" keyProperty="id" >
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select common_sequence.nextval from dual
+        </selectKey>
+
+		insert into t_store_bulletin
+        	(
+    			C_ID,
+        		c_store_id,
+        		c_bulletin_content
+        	)  
+            values
+            (
+            	#{id, jdbcType=INTEGER},
+				#{storeId, jdbcType=INTEGER} ,
+				#{bulletinContent, jdbcType=VARCHAR} 
+            )  
+    </insert>
+    
+    <update id="updateOne" parameterType="com.bjqx.baseData.entity.StoreBulletin" >
+        update t_store_bulletin set 
+        	C_ID = #{id, jdbcType=INTEGER},
+        	c_store_id = #{storeId, jdbcType=INTEGER},
+        	c_bulletin_content = #{bulletinContent, jdbcType=VARCHAR}
+        where c_id =  #{id, jdbcType=INTEGER}
+    </update>
+    
+    <delete id="delById" parameterType="Integer">
+        delete from t_store_bulletin where c_id = #{id, jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

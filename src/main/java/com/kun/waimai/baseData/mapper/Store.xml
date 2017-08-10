@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bjqx.baseData.dao.StoreMapper">
+	
+	<resultMap type="com.bjqx.baseData.entity.Store" id="StoreMap">
+		<id column="c_id" jdbcType="INTEGER" property="id"/>
+		<result column="c_category_id" jdbcType="INTEGER" property="categoryId"/>
+		<result column="c_store_name" jdbcType="VARCHAR" property="storeName"/>
+		<result column="c_store_picture_location" jdbcType="VARCHAR" property="storePictureLocation"/>
+		<result column="c_delivery_price" jdbcType="DECIMAL" property="deliveryPrice"/>
+		<result column="c_distribution_costs" jdbcType="DECIMAL" property="distributionCosts"/>
+		<result column="c_store_phone" jdbcType="VARCHAR" property="storePhone"/>
+		<result column="c_store_longitude" jdbcType="DOUBLE" property="storeLongitude"/>
+		<result column="c_store_latitude" jdbcType="DOUBLE" property="storeLatitude"/>
+		<result column="c_distribution_start_time" jdbcType="TIMESTAMP" property="distributionStartTime"/>
+		<result column="c_distribution_end_time" jdbcType="TIMESTAMP" property="distributionEndTime"/>
+		<result column="c_work_start_time" jdbcType="TIMESTAMP" property="workStartTime"/>
+		<result column="c_work_end_time" jdbcType="TIMESTAMP" property="workEndTime"/>
+		<result column="c_is_delete" jdbcType="INTEGER" property="isDelete"/>
+		<result column="c_is_open" jdbcType="INTEGER" property="isOpen"/>
+		<result column="c_creater" jdbcType="VARCHAR" property="creater"/>
+		<result column="c_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="c_creater_id" jdbcType="INTEGER" property="createrId"/>
+		<result column="c_updater" jdbcType="VARCHAR" property="updater"/>
+		<result column="c_update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+		<result column="c_updater_id" jdbcType="INTEGER" property="updaterId"/>
+	</resultMap>
+	
+	<select id="findList" parameterType="hashmap" resultMap="StoreMap">
+		select t.*
+		<include refid="findSql"/>
+	</select>
+
+    <select id="findOne" parameterType="hashmap" resultMap="StoreMap">
+        select t.*
+        <include refid="findSql"/>
+    </select>
+
+	<sql id="findSql">
+		from t_store t 
+        <where>
+        	<if test="id != null ">and t.c_id = #{id, jdbcType=INTEGER}</if>
+        </where>
+	</sql>
+	
+	<select id="findById" parameterType="Integer" resultMap="StoreMap">
+		select t.* from t_store t where t.c_id = #{id, jdbcType=INTEGER}
+	</select>
+	
+	<insert id="addOne" parameterType="com.bjqx.baseData.entity.Store" useGeneratedKeys="true" keyProperty="id" >
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select common_sequence.nextval from dual
+        </selectKey>
+
+		insert into t_store
+        	(
+    			C_ID,
+        		c_category_id,
+        		c_store_name,
+        		c_store_picture_location,
+        		c_delivery_price,
+        		c_distribution_costs,
+        		c_store_phone,
+        		c_store_longitude,
+        		c_store_latitude,
+        		c_distribution_start_time,
+        		c_distribution_end_time,
+        		c_work_start_time,
+        		c_work_end_time,
+        		c_is_delete,
+        		c_is_open,
+        		c_creater,
+        		c_create_time,
+        		c_creater_id,
+        		c_updater,
+        		c_update_time,
+        		c_updater_id
+        	)  
+            values
+            (
+            	#{id, jdbcType=INTEGER},
+				#{categoryId, jdbcType=INTEGER} ,
+				#{storeName, jdbcType=VARCHAR} ,
+				#{storePictureLocation, jdbcType=VARCHAR} ,
+				#{deliveryPrice, jdbcType=DECIMAL} ,
+				#{distributionCosts, jdbcType=DECIMAL} ,
+				#{storePhone, jdbcType=VARCHAR} ,
+				#{storeLongitude, jdbcType=DOUBLE} ,
+				#{storeLatitude, jdbcType=DOUBLE} ,
+				#{distributionStartTime, jdbcType=TIMESTAMP} ,
+				#{distributionEndTime, jdbcType=TIMESTAMP} ,
+				#{workStartTime, jdbcType=TIMESTAMP} ,
+				#{workEndTime, jdbcType=TIMESTAMP} ,
+				#{isDelete, jdbcType=INTEGER} ,
+				#{isOpen, jdbcType=INTEGER} ,
+				#{creater, jdbcType=VARCHAR} ,
+				#{createTime, jdbcType=TIMESTAMP} ,
+				#{createrId, jdbcType=INTEGER} ,
+				#{updater, jdbcType=VARCHAR} ,
+				#{updateTime, jdbcType=TIMESTAMP} ,
+				#{updaterId, jdbcType=INTEGER} 
+            )  
+    </insert>
+    
+    <update id="updateOne" parameterType="com.bjqx.baseData.entity.Store" >
+        update t_store set 
+        	C_ID = #{id, jdbcType=INTEGER},
+        	c_category_id = #{categoryId, jdbcType=INTEGER},
+        	c_store_name = #{storeName, jdbcType=VARCHAR},
+        	c_store_picture_location = #{storePictureLocation, jdbcType=VARCHAR},
+        	c_delivery_price = #{deliveryPrice, jdbcType=DECIMAL},
+        	c_distribution_costs = #{distributionCosts, jdbcType=DECIMAL},
+        	c_store_phone = #{storePhone, jdbcType=VARCHAR},
+        	c_store_longitude = #{storeLongitude, jdbcType=DOUBLE},
+        	c_store_latitude = #{storeLatitude, jdbcType=DOUBLE},
+        	c_distribution_start_time = #{distributionStartTime, jdbcType=TIMESTAMP},
+        	c_distribution_end_time = #{distributionEndTime, jdbcType=TIMESTAMP},
+        	c_work_start_time = #{workStartTime, jdbcType=TIMESTAMP},
+        	c_work_end_time = #{workEndTime, jdbcType=TIMESTAMP},
+        	c_is_delete = #{isDelete, jdbcType=INTEGER},
+        	c_is_open = #{isOpen, jdbcType=INTEGER},
+        	c_creater = #{creater, jdbcType=VARCHAR},
+        	c_create_time = #{createTime, jdbcType=TIMESTAMP},
+        	c_creater_id = #{createrId, jdbcType=INTEGER},
+        	c_updater = #{updater, jdbcType=VARCHAR},
+        	c_update_time = #{updateTime, jdbcType=TIMESTAMP},
+        	c_updater_id = #{updaterId, jdbcType=INTEGER}
+        where c_id =  #{id, jdbcType=INTEGER}
+    </update>
+    
+    <delete id="delById" parameterType="Integer">
+        delete from t_store where c_id = #{id, jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

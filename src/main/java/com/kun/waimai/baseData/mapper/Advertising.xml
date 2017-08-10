@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bjqx.baseData.dao.AdvertisingMapper">
+	
+	<resultMap type="com.bjqx.baseData.entity.Advertising" id="AdvertisingMap">
+		<id column="c_id" jdbcType="INTEGER" property="id"/>
+		<result column="c_picture_location" jdbcType="VARCHAR" property="pictureLocation"/>
+		<result column="c_picture_url" jdbcType="VARCHAR" property="pictureUrl"/>
+		<result column="c_remark" jdbcType="VARCHAR" property="remark"/>
+	</resultMap>
+	
+	<select id="findList" parameterType="hashmap" resultMap="AdvertisingMap">
+		select t.*
+		<include refid="findSql"/>
+	</select>
+
+    <select id="findOne" parameterType="hashmap" resultMap="AdvertisingMap">
+        select t.*
+        <include refid="findSql"/>
+    </select>
+
+	<sql id="findSql">
+		from t_advertising t 
+        <where>
+        	<if test="id != null ">and t.c_id = #{id, jdbcType=INTEGER}</if>
+        </where>
+	</sql>
+	
+	<select id="findById" parameterType="Integer" resultMap="AdvertisingMap">
+		select t.* from t_advertising t where t.c_id = #{id, jdbcType=INTEGER}
+	</select>
+	
+	<insert id="addOne" parameterType="com.bjqx.baseData.entity.Advertising" useGeneratedKeys="true" keyProperty="id" >
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select common_sequence.nextval from dual
+        </selectKey>
+
+		insert into t_advertising
+        	(
+    			C_ID,
+        		c_picture_location,
+        		c_picture_url,
+        		c_remark
+        	)  
+            values
+            (
+            	#{id, jdbcType=INTEGER},
+				#{pictureLocation, jdbcType=VARCHAR} ,
+				#{pictureUrl, jdbcType=VARCHAR} ,
+				#{remark, jdbcType=VARCHAR} 
+            )  
+    </insert>
+    
+    <update id="updateOne" parameterType="com.bjqx.baseData.entity.Advertising" >
+        update t_advertising set 
+        	C_ID = #{id, jdbcType=INTEGER},
+        	c_picture_location = #{pictureLocation, jdbcType=VARCHAR},
+        	c_picture_url = #{pictureUrl, jdbcType=VARCHAR},
+        	c_remark = #{remark, jdbcType=VARCHAR}
+        where c_id =  #{id, jdbcType=INTEGER}
+    </update>
+    
+    <delete id="delById" parameterType="Integer">
+        delete from t_advertising where c_id = #{id, jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

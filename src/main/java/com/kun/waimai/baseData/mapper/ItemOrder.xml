@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bjqx.baseData.dao.ItemOrderMapper">
+	
+	<resultMap type="com.bjqx.baseData.entity.ItemOrder" id="ItemOrderMap">
+		<id column="c_id" jdbcType="INTEGER" property="id"/>
+		<result column="t_main_order_id" jdbcType="INTEGER" property="tMainOrderId"/>
+		<result column="c_store_main_goods_id" jdbcType="INTEGER" property="storeMainGoodsId"/>
+		<result column="t_store_item_goods_id" jdbcType="INTEGER" property="tStoreItemGoodsId"/>
+		<result column="c_goods_name" jdbcType="VARCHAR" property="goodsName"/>
+		<result column="c_goods_picture_location" jdbcType="VARCHAR" property="goodsPictureLocation"/>
+		<result column="c_goods_cost" jdbcType="DECIMAL" property="goodsCost"/>
+		<result column="c_goods_packing_cost" jdbcType="DECIMAL" property="goodsPackingCost"/>
+		<result column="c_goods_specification" jdbcType="VARCHAR" property="goodsSpecification"/>
+		<result column="c_remark" jdbcType="VARCHAR" property="remark"/>
+		<result column="c_creater" jdbcType="VARCHAR" property="creater"/>
+		<result column="c_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="c_creater_id" jdbcType="INTEGER" property="createrId"/>
+		<result column="c_updater" jdbcType="VARCHAR" property="updater"/>
+		<result column="c_update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+		<result column="c_updater_id" jdbcType="INTEGER" property="updaterId"/>
+	</resultMap>
+	
+	<select id="findList" parameterType="hashmap" resultMap="ItemOrderMap">
+		select t.*
+		<include refid="findSql"/>
+	</select>
+
+    <select id="findOne" parameterType="hashmap" resultMap="ItemOrderMap">
+        select t.*
+        <include refid="findSql"/>
+    </select>
+
+	<sql id="findSql">
+		from t_item_order t 
+        <where>
+        	<if test="id != null ">and t.c_id = #{id, jdbcType=INTEGER}</if>
+        </where>
+	</sql>
+	
+	<select id="findById" parameterType="Integer" resultMap="ItemOrderMap">
+		select t.* from t_item_order t where t.c_id = #{id, jdbcType=INTEGER}
+	</select>
+	
+	<insert id="addOne" parameterType="com.bjqx.baseData.entity.ItemOrder" useGeneratedKeys="true" keyProperty="id" >
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select common_sequence.nextval from dual
+        </selectKey>
+
+		insert into t_item_order
+        	(
+    			C_ID,
+        		t_main_order_id,
+        		c_store_main_goods_id,
+        		t_store_item_goods_id,
+        		c_goods_name,
+        		c_goods_picture_location,
+        		c_goods_cost,
+        		c_goods_packing_cost,
+        		c_goods_specification,
+        		c_remark,
+        		c_creater,
+        		c_create_time,
+        		c_creater_id,
+        		c_updater,
+        		c_update_time,
+        		c_updater_id
+        	)  
+            values
+            (
+            	#{id, jdbcType=INTEGER},
+				#{tMainOrderId, jdbcType=INTEGER} ,
+				#{storeMainGoodsId, jdbcType=INTEGER} ,
+				#{tStoreItemGoodsId, jdbcType=INTEGER} ,
+				#{goodsName, jdbcType=VARCHAR} ,
+				#{goodsPictureLocation, jdbcType=VARCHAR} ,
+				#{goodsCost, jdbcType=DECIMAL} ,
+				#{goodsPackingCost, jdbcType=DECIMAL} ,
+				#{goodsSpecification, jdbcType=VARCHAR} ,
+				#{remark, jdbcType=VARCHAR} ,
+				#{creater, jdbcType=VARCHAR} ,
+				#{createTime, jdbcType=TIMESTAMP} ,
+				#{createrId, jdbcType=INTEGER} ,
+				#{updater, jdbcType=VARCHAR} ,
+				#{updateTime, jdbcType=TIMESTAMP} ,
+				#{updaterId, jdbcType=INTEGER} 
+            )  
+    </insert>
+    
+    <update id="updateOne" parameterType="com.bjqx.baseData.entity.ItemOrder" >
+        update t_item_order set 
+        	C_ID = #{id, jdbcType=INTEGER},
+        	t_main_order_id = #{tMainOrderId, jdbcType=INTEGER},
+        	c_store_main_goods_id = #{storeMainGoodsId, jdbcType=INTEGER},
+        	t_store_item_goods_id = #{tStoreItemGoodsId, jdbcType=INTEGER},
+        	c_goods_name = #{goodsName, jdbcType=VARCHAR},
+        	c_goods_picture_location = #{goodsPictureLocation, jdbcType=VARCHAR},
+        	c_goods_cost = #{goodsCost, jdbcType=DECIMAL},
+        	c_goods_packing_cost = #{goodsPackingCost, jdbcType=DECIMAL},
+        	c_goods_specification = #{goodsSpecification, jdbcType=VARCHAR},
+        	c_remark = #{remark, jdbcType=VARCHAR},
+        	c_creater = #{creater, jdbcType=VARCHAR},
+        	c_create_time = #{createTime, jdbcType=TIMESTAMP},
+        	c_creater_id = #{createrId, jdbcType=INTEGER},
+        	c_updater = #{updater, jdbcType=VARCHAR},
+        	c_update_time = #{updateTime, jdbcType=TIMESTAMP},
+        	c_updater_id = #{updaterId, jdbcType=INTEGER}
+        where c_id =  #{id, jdbcType=INTEGER}
+    </update>
+    
+    <delete id="delById" parameterType="Integer">
+        delete from t_item_order where c_id = #{id, jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

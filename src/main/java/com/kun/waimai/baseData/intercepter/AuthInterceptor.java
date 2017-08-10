@@ -64,7 +64,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         }
 
         if (StringUtils.isBlank(permissionCode)) {
-            Permission permission = this.permissionService.findByUri(requestUrl);
+            //Permission permission = this.permissionService.findByUri(requestUrl);
+            Permission permission = new Permission();
             //如果没有找到相应的权限,则默认可以访问.
             if (permission == null) {
                 userUriAccessCodeMap.put(builder.toString(), "uriNotExistInDB");

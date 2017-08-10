@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bjqx.baseData.dao.EvaluateMapper">
+	
+	<resultMap type="com.bjqx.baseData.entity.Evaluate" id="EvaluateMap">
+		<id column="c_id" jdbcType="INTEGER" property="id"/>
+		<result column="c_main_order_id" jdbcType="INTEGER" property="mainOrderId"/>
+		<result column="c_store_id" jdbcType="INTEGER" property="storeId"/>
+		<result column="c_user_id" jdbcType="INTEGER" property="userId"/>
+		<result column="c_evaluate_type" jdbcType="INTEGER" property="evaluateType"/>
+		<result column="c_evaluate_tag_id" jdbcType="INTEGER" property="evaluateTagId"/>
+		<result column="c_evaluate_context" jdbcType="VARCHAR" property="evaluateContext"/>
+		<result column="c_evaluate_stars" jdbcType="DOUBLE" property="evaluateStars"/>
+		<result column="c_arrive_time" jdbcType="TIMESTAMP" property="arriveTime"/>
+		<result column="c_creater" jdbcType="VARCHAR" property="creater"/>
+		<result column="c_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="c_creater_id" jdbcType="INTEGER" property="createrId"/>
+		<result column="c_updater" jdbcType="VARCHAR" property="updater"/>
+		<result column="c_update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+		<result column="c_updater_id" jdbcType="INTEGER" property="updaterId"/>
+	</resultMap>
+	
+	<select id="findList" parameterType="hashmap" resultMap="EvaluateMap">
+		select t.*
+		<include refid="findSql"/>
+	</select>
+
+    <select id="findOne" parameterType="hashmap" resultMap="EvaluateMap">
+        select t.*
+        <include refid="findSql"/>
+    </select>
+
+	<sql id="findSql">
+		from t_evaluate t 
+        <where>
+        	<if test="id != null ">and t.c_id = #{id, jdbcType=INTEGER}</if>
+        </where>
+	</sql>
+	
+	<select id="findById" parameterType="Integer" resultMap="EvaluateMap">
+		select t.* from t_evaluate t where t.c_id = #{id, jdbcType=INTEGER}
+	</select>
+	
+	<insert id="addOne" parameterType="com.bjqx.baseData.entity.Evaluate" useGeneratedKeys="true" keyProperty="id" >
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select common_sequence.nextval from dual
+        </selectKey>
+
+		insert into t_evaluate
+        	(
+    			C_ID,
+        		c_main_order_id,
+        		c_store_id,
+        		c_user_id,
+        		c_evaluate_type,
+        		c_evaluate_tag_id,
+        		c_evaluate_context,
+        		c_evaluate_stars,
+        		c_arrive_time,
+        		c_creater,
+        		c_create_time,
+        		c_creater_id,
+        		c_updater,
+        		c_update_time,
+        		c_updater_id
+        	)  
+            values
+            (
+            	#{id, jdbcType=INTEGER},
+				#{mainOrderId, jdbcType=INTEGER} ,
+				#{storeId, jdbcType=INTEGER} ,
+				#{userId, jdbcType=INTEGER} ,
+				#{evaluateType, jdbcType=INTEGER} ,
+				#{evaluateTagId, jdbcType=INTEGER} ,
+				#{evaluateContext, jdbcType=VARCHAR} ,
+				#{evaluateStars, jdbcType=DOUBLE} ,
+				#{arriveTime, jdbcType=TIMESTAMP} ,
+				#{creater, jdbcType=VARCHAR} ,
+				#{createTime, jdbcType=TIMESTAMP} ,
+				#{createrId, jdbcType=INTEGER} ,
+				#{updater, jdbcType=VARCHAR} ,
+				#{updateTime, jdbcType=TIMESTAMP} ,
+				#{updaterId, jdbcType=INTEGER} 
+            )  
+    </insert>
+    
+    <update id="updateOne" parameterType="com.bjqx.baseData.entity.Evaluate" >
+        update t_evaluate set 
+        	C_ID = #{id, jdbcType=INTEGER},
+        	c_main_order_id = #{mainOrderId, jdbcType=INTEGER},
+        	c_store_id = #{storeId, jdbcType=INTEGER},
+        	c_user_id = #{userId, jdbcType=INTEGER},
+        	c_evaluate_type = #{evaluateType, jdbcType=INTEGER},
+        	c_evaluate_tag_id = #{evaluateTagId, jdbcType=INTEGER},
+        	c_evaluate_context = #{evaluateContext, jdbcType=VARCHAR},
+        	c_evaluate_stars = #{evaluateStars, jdbcType=DOUBLE},
+        	c_arrive_time = #{arriveTime, jdbcType=TIMESTAMP},
+        	c_creater = #{creater, jdbcType=VARCHAR},
+        	c_create_time = #{createTime, jdbcType=TIMESTAMP},
+        	c_creater_id = #{createrId, jdbcType=INTEGER},
+        	c_updater = #{updater, jdbcType=VARCHAR},
+        	c_update_time = #{updateTime, jdbcType=TIMESTAMP},
+        	c_updater_id = #{updaterId, jdbcType=INTEGER}
+        where c_id =  #{id, jdbcType=INTEGER}
+    </update>
+    
+    <delete id="delById" parameterType="Integer">
+        delete from t_evaluate where c_id = #{id, jdbcType=INTEGER}
+	</delete>
+	
+</mapper>
