@@ -14,7 +14,7 @@
 	<!-- 配置文件 -->
 	<context:property-placeholder location="classpath:application.properties" />
 	<context:annotation-config />
-	<context:component-scan base-package="com.kun.waimai" >
+	<context:component-scan base-package="com.kun.shop" >
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
@@ -57,13 +57,13 @@
 	<!-- SqlSessionFactory -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath*:com/kun/waimai/**/mapper/*.xml" />
+		<property name="mapperLocations" value="classpath*:com/kun/shop/**/mapper/*.xml" />
 		<property name="configLocation" value="classpath:config/mybatis.cfg.xml" />
 	</bean>
 
 	<!-- ScanMapperFiles -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.kun.waimai" />
+		<property name="basePackage" value="com.kun.shop" />
 	</bean>
 
 	<bean id="txManager"

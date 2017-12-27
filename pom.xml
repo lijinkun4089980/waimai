@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.kun</groupId>
-    <artifactId>waimai</artifactId>
+    <artifactId>shopMall</artifactId>
     <version>1.0-SNAPSHOT</version>
     
     <build>
@@ -36,7 +36,6 @@
     </properties>
 
     <dependencies>
-
         <!-- JPush jar -->
         <dependency>
             <groupId>cn.jpush.api</groupId>

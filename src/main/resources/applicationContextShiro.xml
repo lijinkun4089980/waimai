@@ -9,7 +9,7 @@
     <!--<property name="casService" value="${local.server.ip.address}/login" />-->
     <!--</bean>-->
 
-    <bean id="baseRealm" class="com.kun.waimai.base.common.BaseRealm"></bean>
+    <bean id="baseRealm" class="com.kun.shop.base.common.BaseRealm"></bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="baseRealm"/>

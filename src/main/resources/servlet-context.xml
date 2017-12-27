@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <aop:aspectj-autoproxy/>
-    <context:component-scan base-package="com.kun.waimai.**.controller">
+    <context:component-scan base-package="com.kun.shop.**.controller">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:include-filter type="annotation"
                                 expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
@@ -44,11 +44,11 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="com.kun.waimai.baseData.intercepter.LoginInterceptor"/>
+            <bean class="com.kun.shop.baseData.intercepter.LoginInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="com.kun.waimai.baseData.intercepter.AuthInterceptor"/>
+            <bean class="com.kun.shop.baseData.intercepter.AuthInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>  
